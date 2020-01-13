@@ -43,6 +43,8 @@ class DockerConfig:
         self.env = env or {}
         self.env.setdefault('AWS_DEFAULT_REGION', 'us-east-1')
 
+        if not init_commands:
+            init_commands = []
         self.init_commands = init_commands
 
 
