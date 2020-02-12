@@ -140,8 +140,14 @@ class Chalice(cdk.Construct):
     def _package_app_subprocess(self, sam_package_dir):
         chalice_exe = shutil.which('chalice')
         command = [chalice_exe, 'package', '--stage', self.stage_name, sam_package_dir]
+        
+        # load of environment variable in order to pass it to chalice package sub process (for example: SSH_KEY)
+        env = {}
+        for k, v in os.environ.items():
+            env[k] = v
+        
         # Chalice requires AWS_DEFAULT_REGION to be set for 'package' sub-command.
-        env = {'AWS_DEFAULT_REGION': 'us-east-1'}
+        env.setdefault('AWS_DEFAULT_REGION': 'us-east-1')
 
         print(f'Packaging Chalice app for {self.stage_name}')
         subprocess.run(command, cwd=self.source_dir, env=env)
