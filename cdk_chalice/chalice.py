@@ -147,7 +147,7 @@ class Chalice(cdk.Construct):
             env[k] = v
         
         # Chalice requires AWS_DEFAULT_REGION to be set for 'package' sub-command.
-        env.setdefault('AWS_DEFAULT_REGION': 'us-east-1')
+        env.setdefault('AWS_DEFAULT_REGION', 'us-east-1')
 
         print(f'Packaging Chalice app for {self.stage_name}')
         subprocess.run(command, cwd=self.source_dir, env=env)
